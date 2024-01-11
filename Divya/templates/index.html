@@ -1,0 +1,173 @@
+{% extends 'header_footer.html' %}
+{% load static %}
+
+{% block content %}
+    
+    {% for My_profile_home in My_profile_home_object %}
+    <div class="main-wrapper">
+        
+        <section class="about-me-section p-3 p-lg-5 theme-bg-light">
+            <div class="container">
+                <div class="profile-teaser media flex-column flex-lg-row">
+                    
+                    <div class="media-body">
+                        <h2 class="name font-weight-bold mb-1">{{ My_profile_home.full_name }}</h2>
+                        <div class="tagline mb-3">{{ My_profile_home.my_job_status }}</div>
+                        <div class="bio mb-4">{{ My_profile_home.mid_intro }} I write about my projects on <a class="link-on-bg" href="{% url 'blog' %}">my blog</a>. Want to know how I have created my projects? Check out my projects <a class="link-on-bg" href="{% url 'portfolio' %}">portfolio</a>.
+                        </div><!--//bio-->
+                        <div class="mb-4">
+                            <a class="btn btn-primary mr-2 mb-3" href="{% url 'portfolio' %}"><i class="fas fa-arrow-alt-circle-right mr-2"></i><span class="d-none d-md-inline">View</span> Portfolio</a>
+                        </div>
+                    </div><!--//media-body-->
+                    <img class="profile-image mb-3 mb-lg-0 ml-lg-5 mr-md-0" src="{{ My_profile_home.side_profile_pic.url }}" alt="">
+                </div>
+            </div>
+        </section><!--//about-me-section-->
+        
+        <section class="overview-section p-3 p-lg-5">
+            <div class="container">
+                <h2 class="section-title font-weight-bold mb-3">What I do</h2>
+                <div class="section-intro mb-5">{{ My_profile_home.what_i_do }} Want to find out more about my experience? Check out my <a href="{% url 'portfolio' %}">project portfolio</a>.</div>
+            </div>
+        </section>
+
+        {% endfor %}
+        
+        
+         <!-- Display upload_video_intro.html content here -->
+         
+        <section class="Introduction-section p-3 p-lg-5">
+            <div class="container">
+                <h2 class="section-title font-weight-bold mb-5">Introduction</h2>
+                <div class="row">
+                    {% for x in video %}
+                    <div class="col-md-6">
+                            <video class="embed-responsive embed-reponsive-16by8" controls="controls" width=300 height=200>
+                                <source src="{{ x.video.url }}" type="video/mp4">
+                            </video>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        <section class="featured-section p-3 p-lg-5">
+            <div class="container">
+                <h2 class="section-title font-weight-bold mb-5">Featured Projects</h2>
+                <div class="row">
+
+                    {% for My_portfolio in My_portfolio_object %}
+
+                    <div class="col-md-6 mb-5">
+                        <div class="card project-card">
+                            <div class="row no-gutters">
+                                <div class="col-lg-4 card-img-holder">
+                                    <img src="{{ My_portfolio.portfolio_image.url }}" class="card-img" alt="image">
+                                </div>
+                                <div class="col-lg-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><a href="{{ My_portfolio.portfolio_medium_link }}" class="theme-link" target="_blank">{{ My_portfolio.portfolio_title }}</a></h5>
+                                        <p class="card-text">{{ My_portfolio.portfolio_short_dis }}</p>
+                                        <div class="meta mb-1"><span class="date">{{ My_portfolio.portfolio_publish_time }}</span><span class="time">{{ My_portfolio.portfolio_readtime }}</span></span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="link-mask">
+                                <a class="link-mask-link" href="{% url 'portfolio' %}"></a>
+                                <div class="link-mask-text" >
+                                    <div class="row btn-group">
+                                        <!-- <a href="{{ My_portfolio.portfolio_medium_link }}" target="_blank">
+                                            <button type="button" class="btn btn-primary" style> <i class="fab fa-medium"></i> Medium</button>
+                                        </a> -->
+                                          
+                                        <a href="{{ My_portfolio.portfolio_git_link }}" target="_blank">
+                                            <button type="button" class="btn btn-secondary"> <i class="fab fa-github-alt"></i> Github</button>
+                                        </a>
+                                            
+                                        <!-- <a href="{{ My_portfolio.portfolio_live_link }}" target="_blank">
+                                            <button type="button" class="btn btn-primary"> <i class="fas fa-laptop-code"></i> Live Project</button>
+                                                
+                                        </a> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!--//card-->
+                    </div><!--//col  -->
+
+                    {% endfor %}
+
+                    
+                </div><!--//row-->
+                <div class="text-center py-3"><a href="{% url 'portfolio' %}" class="btn btn-primary"><i class="fas fa-arrow-alt-circle-right mr-2"></i>View Portfolio</a></div>
+                
+            </div><!--//container-->
+
+            
+        </section><!--//featured-section-->
+        
+        
+        <section class="latest-blog-section p-3 p-lg-5">
+            <div class="container"><hr>
+                <br>
+                    <h2 class="section-title font-weight-bold mb-5">Latest Blog Posts</h2>
+                    <div class="row">
+
+                        {% for My_blog in My_blog_object %}
+
+                        <div class="col-md-4 mb-5">
+                            <div class="card blog-post-card">
+                                <img class="card-img-top" src="{{ My_blog.blog_image.url }}" alt="image">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a class="theme-link" href="{{ My_blog.blog_medium_link }}" target="_blank">{{ My_blog.blog_title }}</a></h5>
+                                    <p class="card-text">{{ My_blog.blog_short_dis }}</p>
+                                    <p class="mb-0"><a class="more-link" href="{{ My_blog.blog_medium_link }}" target="_blank">Read more &rarr;</a></p>
+                                    
+                                </div>
+                                <div class="card-footer">
+                                    <small class="text-muted">{{ My_blog.blog_publish_time }} &#8226;</small>
+                                    <small  class="text-muted">{{ My_blog.blog_readtime }}</small>
+                                </div>
+                            </div><!--//card-->
+                        </div><!--//col -->
+
+                        {% endfor %}
+                        
+                        
+                    </div><!--//row-->
+
+                    <div class="text-center py-3"><a href="{% url 'blog' %}" class="btn btn-primary"><i class="fas fa-arrow-alt-circle-right mr-2"></i>View Blog</a></div>
+                </div><!--//container-->
+        </section><!--//latest-blog-section-->
+
+        <section class="github section latest-blog-section p-3 p-lg-5">
+        
+            <div class="container"><hr>
+                <br>
+                <h2 class="section-title font-weight-bold mb-5">My GitHub</h2>
+                <p>My GitHub Contribution Graph <a href="https://github.com/pratapsdev11" target="_blank">DivyaPratapSingh</a> Git profile. 
+                            
+                        <div class="calendar">
+                        <!-- Loading stuff -->
+
+                        <img src="https://github-readme-stats.vercel.app/api?username=pratapsdev11&show_icons=true&theme=radical" alt="GitHub Contribution Graph">
+                        </div>
+                </div>
+
+        </section><!--//latest-blog-section-->
+        <section class="certifications-button-section p-3 p-lg-5">
+            <div class="container"><hr>
+				<br>
+				<h2 class="section-title font-weight-bold mb-5">My Certifications</h2>
+                <div class="text-center py-3"><a href="{% url 'certifications' %}" class="btn btn-primary"><i class="fas fa-arrow-alt-circle-right mr-2"></i>View Certifications</a></div>
+            </div>
+        </section>
+    </div><!--//main-wrapper-->
+    
+{% endblock content %}    
+
+<footer class="footer text-center py-4">
+    <small class="copyright">Template Copyright &copy; <a href="https://themes.3rdwavemedia.com/" target="_blank">3rd Wave Media</a></small>
+</footer>
+
+</div><!--//main-wrapper-->
