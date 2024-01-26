@@ -1,0 +1,79 @@
+{% extends 'header_footer.html' %}
+{% load static %}
+
+{% block content %}
+    
+    <div class="main-wrapper">
+        <section class="cta-section theme-bg-light py-5">
+            <div class="container text-center single-col-max-width">
+                <h2 class="heading">Certifications</h2>
+                <div class="intro">
+                    <p>Certifications I earned.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="blog-list px-3 py-5 p-md-5">
+            <div class="container single-col-max-width">
+                
+                {% for Certification in certifications %}
+
+                <div class="item mb-5 car-animation zoom-on-hover">
+                    <div class="media">
+                        <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src="{{ Certification.pic.url }}" alt="image">
+                        <div class="media-body">
+                            <div class="blog-content">
+                                <h3 class="title mb-1"><a href="{{ Certification.verification_link }}" target="_blank">{{ Certification.title }}</a></h3>
+                                <div class="intro">{{ Certification.issuer }}</div>
+                                <a class="more-link" href="{{ Certification.verification_link }}" target="_blank">
+                                    <button type="button" class="btn btn-secondary"> <i class="fas fa-certificate mr-2"></i>View Certificate</button>
+                                </a>
+                            </div><!--//blog-content-->
+                        </div><!--//media-body-->
+                    </div><!--//media-->
+                </div><!--//item-->
+
+                
+                {% endfor %}
+                
+                <nav class="blog-nav nav nav-justified my-5">
+                    {% if My_certifications_object.has_next %}
+                        <a class="nav-link-next nav-item nav-link rounded" href="{% url 'certifications' %}?page={{ My_certifications_object.next_page_number }}">Next<i class="arrow-next fas fa-long-arrow-alt-right"></i></a>
+                    {% endif %}
+                </nav>
+            </div>
+        </section>
+
+        <footer class="footer text-center py-4">
+            <small class="copyright">Template Copyright &copy; <a href="https://themes.3rdwavemedia.com/" target="_blank">3rd Wave Media</a></small>
+        </footer>
+    </div><!--//main-wrapper-->
+
+    <style>
+        @keyframes carAnimation {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .car-animation {
+            animation: carAnimation 2s ease-in-out;
+        }
+
+        .zoom-on-hover {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .zoom-on-hover:hover {
+            transform: scale(1.1); /* Adjust the scaling factor as needed */
+        }
+
+        .blog-content {
+            transform-origin: top;
+        }
+    </style>
+
+{% endblock content %}

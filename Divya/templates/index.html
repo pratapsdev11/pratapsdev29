@@ -1,0 +1,492 @@
+{% extends 'header_footer.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    @keyframes fade-in-slide-up {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes pop {
+        0% {
+            transform: scaleY(0);
+        }
+        60% {
+            transform: scaleY(1.2);
+        }
+        100% {
+            transform: scaleY(1);
+        }
+    }
+
+    .animate-fade-in-slide-up {
+        animation: fade-in-slide-up 1s ease-out;
+    }
+
+    .initially-hidden {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .animated {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Button Pop Effect */
+    .btn-pop {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn-pop::before {
+        content: "";
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #3498db; /* Change to the desired button background color */
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .btn-pop:hover::before {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+
+    /* Button Vibrate Effect */
+    .btn-vibrate {
+        display: inline-block;
+        transition: transform 0.3s cubic-bezier(.25, .46, .45, .94);
+    }
+
+    .btn-vibrate:hover {
+        transform: scale(1.1) rotate(-1deg);
+    }
+
+    /* Profile Image Pop Effect */
+    .profile-image {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .profile-image:hover {
+        transform: scale(1.1);
+    }
+
+    /* Zoom In/Out Effect for Section */
+    .zoom-section {
+        transition: transform 0.5s ease-in-out;
+    }
+    .zoom-on-hover {
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .zoom-section:hover {
+        transform: scale(1.049);
+       
+    }  /* New cyberpunk theme styles */
+    body {
+        background-color: #000;
+        color: #fff;
+    }
+
+    .theme-bg-light {
+        background-color: #0f0f0f;
+        color: #66d9ef;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        background-color: #ff79c6;
+        color: #000;
+    }
+        /* Add a style for the separator line */
+    .separator {
+        width: 100%;
+        height: 1px;
+        background-color: #ccc; /* Change the color as needed */
+        margin: 20px 0; /* Adjust the margin as needed */
+    }
+    .badge-zoom {
+        transition: transform 0.3s ease-in-out;
+        padding: 0.5%; /* HEHA */
+    }
+
+    .badge-zoom:hover {
+        transform: scale(1.1);
+    }
+
+    /* Update other styles accordingly based on the cyberpunk theme */
+
+</style>
+
+{% for My_profile_home in My_profile_home_object %}
+<div class="main-wrapper">
+
+    <section class="about-me-section p-3 p-lg-5 theme-bg-light initially-hidden animate-fade-in-slide-up ">      
+        <div class="container">
+            <div class="profile-teaser media flex-column flex-lg-row">
+
+                <div class="media-body">
+                    <h2 class="name font-weight-bold mb-1">{{ My_profile_home.full_name }}</h2>
+                    <div class="tagline mb-3">{{ My_profile_home.my_job_status }}</div>
+                    <div class="bio mb-4">{{ My_profile_home.mid_intro }} I write about my projects on <a
+                            class="link-on-bg" href="{% url 'blog' %}">my blog</a>. Want to know how I have created my
+                        projects? Check out my projects <a class="link-on-bg"
+                            href="{% url 'portfolio' %}">portfolio</a>.
+                    </div>
+                    <!--//bio-->
+                    <div class="mb-4"><a class="btn btn-primary mr-2 mb-3 btn-pop btn-vibrate zoom-section" href="{% url 'portfolio' %}">
+                        &#x1F4BB; <!-- Unicode for laptop -->
+                        <span class="d-none d-md-inline">View Portfolio</span>
+                    </a>
+                    
+                       
+                    </div>
+                </div><!--//media-body-->
+                <img class="profile-image mb-3 mb-lg-0 ml-lg-5 mr-md-0"
+                    src="{{ My_profile_home.side_profile_pic.url }}" alt="">
+            </div>
+        </div>
+    </section><!--//about-me-section-->
+    <section class="tech-stack-section p-3 p-lg-5 theme-bg-light initially-hidden animate-fade-in-slide-up">
+        <div class="container">
+            <h2 class="section-title font-weight-bold mb-5">My Skills</h2>
+    
+            <!-- Machine Learning and Data Science -->
+            <div class="mb-3">
+                <h4>Machine Learning and Data Science</h4>
+                <img class="badge-zoom" src="https://img.shields.io/badge/TensorFlow-%2300a0e5.svg?&style=for-the-badge&logo=TensorFlow&logoColor=white" alt="TensorFlow">
+                <img class="badge-zoom" src="https://img.shields.io/badge/Keras-%23D00000.svg?&style=for-the-badge&logo=Keras&logoColor=white"alt="Keras">
+                <img class="badge-zoom" src="https://img.shields.io/badge/Scikit--learn-%23F7931E.svg?&style=for-the-badge&logo=scikit-learn&logoColor=white" alt="Scikit-learn">
+                <img class="badge-zoom" src="https://img.shields.io/badge/NumPy-%23013243.svg?&style=for-the-badge&logo=numpy&logoColor=white" alt="NumPy">
+                <img class="badge-zoom" src="https://img.shields.io/badge/Pandas-%23150458.svg?&style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas">
+                <img class="badge-zoom" src="https://img.shields.io/badge/OpenCV-%23FD6F02.svg?&style=for-the-badge&logo=OpenCV&logoColor=white" alt="OpenCV">               
+                <img class="badge-zoom" src="https://img.shields.io/badge/Tabula-%23000000.svg?&style=for-the-badge&logo=Tabula&logoColor=white" alt="Tabula">
+                <img class="badge-zoom" src="https://img.shields.io/badge/MediaPipe-<COLOR_CODE>.svg?&style=for-the-badge&logo=mediapipe&logoColor=white" alt="Mediapipe">
+                <!-- Add other ML and Data Science tools here -->
+            </div>
+
+    
+            <!-- Web Development - Backend -->
+            <div class="mb-3">
+                <h4>Web Development - Backend</h4>
+                <img class="badge-zoom" src="https://img.shields.io/badge/Django-%23092E20.svg?&style=for-the-badge&logo=Django&logoColor=white" alt="Django">
+                <img class="badge-zoom" src="https://img.shields.io/badge/Flask-%23000.svg?&style=for-the-badge&logo=Flask&logoColor=white" alt="Flask">
+                <img class="badge-zoom" src="https://img.shields.io/badge/FastAPI-%230170FE.svg?&style=for-the-badge&logo=FastAPI&logoColor=white" alt="FastAPI">
+                <img class="badge-zoom" src="https://img.shields.io/badge/Streamlit-%235E4A8E.svg?&style=for-the-badge&logo=Streamlit&logoColor=white" alt="Streamlit">
+                <!-- Add other backend tools here -->
+            </div>
+    
+            <!-- Web Development - Frontend -->
+            <div class="mb-3">
+                <h4>Web Development - Frontend</h4>
+                <img class="badge-zoom" src="https://img.shields.io/badge/HTML-%23E44D26.svg?&style=for-the-badge&logo=html5&logoColor=white" alt="HTML">
+                <img class="badge-zoom" src="https://img.shields.io/badge/CSS-%231572B6.svg?&style=for-the-badge&logo=css3&logoColor=white" alt="CSS">
+                <img class="badge-zoom" src="https://img.shields.io/badge/JavaScript-%23F7DF1E.svg?&style=for-the-badge&logo=javascript&logoColor=white" alt="JavaScript">
+                <!-- Add other frontend tools here -->
+            </div>
+            <div class="mb-3">
+                <h4>Data Base</h4>
+                <img class="badge-zoom" src="https://img.shields.io/badge/SQLite-%23003B57.svg?&style=for-the-badge&logo=SQLite&logoColor=white" alt="SQLite">
+                <img class="badge-zoom" src="https://img.shields.io/badge/MySQL-%2300758F.svg?&style=for-the-badge&logo=MySQL&logoColor=white" alt="MySQL">
+                <!-- Add other backend tools here -->
+            </div>
+            <div class="mb-3">
+                <h4>Cloud Services</h4>
+                <img class="badge-zoom"  src="https://img.shields.io/badge/Azure-%230078D4.svg?&style=for-the-badge&logo=Microsoft-Azure&logoColor=white" alt="Microsoft-Azure">
+                <img class="badge-zoom" src="https://img.shields.io/badge/Colab-%23F9AB00.svg?&style=for-the-badge&logo=Google-Colab&logoColor=black" alt="Google-Colab">
+            </div>    
+                <!-- Add other frontend tools here -->
+            <div class="mb-3">
+                <h4>Version Control and Collaboration</h4>
+                <img class="badge-zoom" src="https://img.shields.io/badge/Git-%23F05032.svg?&style=for-the-badge&logo=git&logoColor=white" alt="Git">
+                <img class="badge-zoom" src="https://img.shields.io/badge/GitHub-%23181717.svg?&style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+            </div>
+            <!-- Add other sections as needed -->
+    
+        </div>
+    </section>
+<!--     
+    <section class="overview-section p-3 p-lg-5 theme-bg-light initially-hidden animate-fade-in-slide-up ">
+        <div class="container">
+            <div class="row">
+            <h2 class="section-title font-weight-bold mb-3">What I do</h2>
+            <div class="section-intro mb-5">{{ My_profile_home.what_i_do }} Want to find out more about my experience?
+                Check out my <a href="{% url 'portfolio' %}">project portfolio</a>.</div>
+            </div>    
+        </div>
+    </section> -->
+    <!-- Add a line separator here -->
+    <!-- <div class="separator"></div> --> 
+    <!-- Add more sections with the initially-hidden class for other elements
+
+    <!-- <section class="Introduction-section p-3 p-lg-5 theme-bg-light initially-hidden animate-fade-in-slide-up ">
+        <div class="container">
+            <h2 class="section-title font-weight-bold mb-5">Introduction</h2>
+            <div class="row">
+                {% for x in video %}
+                <div class="col-md-6">
+                    <video class="embed-responsive embed-reponsive-16by8" controls="controls" width=300 height=200>
+                        <source src="{{ x.video.url }}" type="video/mp4">
+                    </video>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section> -->
+    <section class="featured-section p-3 p-lg-5 theme-bg-light initially-hidden animate-fade-in-slide-up ">
+        <div class="container">
+            <h2 class="section-title font-weight-bold mb-5">Featured Projects</h2>
+            <div class="row">
+
+                {% for My_portfolio in My_portfolio_object %}
+
+                <div class="col-md-6 mb-5">
+                    <div class="card project-card zoom-section">
+                        <div class="row no-gutters">
+                            <div class="col-lg-4 card-img-holder">
+                                <img src="{{ My_portfolio.portfolio_image.url }}" class="card-img" alt="image">
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a href="{{ My_portfolio.portfolio_medium_link }}" class="theme-link" target="_blank">{{ My_portfolio.portfolio_title }}</a></h5>
+                                    <p class="card-text">{{ My_portfolio.portfolio_short_dis }}</p>
+                                    <div class="meta mb-1"><span class="date">{{ My_portfolio.portfolio_publish_time }}</span><span class="time">{{ My_portfolio.portfolio_readtime }}</span></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="link-msk"> <!-- HEHA -->
+                            <a class="link-mask-link" href="{% url 'portfolio' %}"></a>
+                            <div class="link-mask-text" >
+                                <div class="row btn-group">
+                                    <!-- <a href="{{ My_portfolio.portfolio_medium_link }}" target="_blank">
+                                        <button type="button" class="btn btn-primary" style> <i class="fab fa-medium"></i> Medium</button>
+                                    </a> -->
+                                      
+                                    <a href="{{ My_portfolio.portfolio_git_link }}" target="_blank">
+                                        <button type="button" class="btn btn-secondary"> <i class="fab fa-github-alt"></i> Github</button>
+                                    </a>
+                                        
+                                    <!-- <a href="{{ My_portfolio.portfolio_live_link }}" target="_blank">
+                                        <button type="button" class="btn btn-primary"> <i class="fas fa-laptop-code"></i> Live Project</button>
+                                            
+                                    </a> -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div><!--//card-->
+                </div><!--//col  -->
+
+                {% endfor %}
+
+                
+            </div><!--//row-->
+            <div class="text-center py-3"><a class="btn btn-primary mr-2 mb-3 btn-pop  zoom-section" href="{% url 'portfolio' %}">
+                &#x1F4BB; <!-- Unicode for laptop -->
+                <span class="d-none d-md-inline">View Portfolio</span>
+            </a>
+            
+            
+            </div>
+            
+        </div><!--//container-->
+
+        
+    </section><!--//featured-section-->
+    
+    <section class="latest-blog-section p-3 p-lg-5 theme-bg-light initially-hidden animate-fade-in-slide-up ">
+        <div class="container"><hr>
+            <br>
+                <h2 class="section-title font-weight-bold mb-5">Latest Blog Posts</h2>
+                <div class="row">
+
+                    {% for My_blog in My_blog_object %}
+
+                    <div class="col-md-4 mb-5">
+                        <div class="card blog-post-card zoom-section">
+                            <img class="card-img-top" src="{{ My_blog.blog_image.url }}" alt="image">
+                            <div class="card-body">
+                                <h5 class="card-title"><a class="theme-link" href="{{ My_blog.blog_link }}"class="theme-link" target="_blank">{{ My_blog.blog_title }}</a></h5>
+                                <!-- Display a truncated version of the blog content -->
+                                <p class="card-text">{{ My_blog.blog_content|truncatechars:150 }}</p>
+                                <p class="mb-0"><a class="more-link" href="{{ My_blog.blog_link }}" target="_blank">Read more &rarr;</a></p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">{{ My_blog.blog_publish_time }} &#8226;</small>
+                                <small class="text-muted">{{ My_blog.blog_readtime }}</small>
+                            </div>
+
+                            <div class="link-mask">
+                                <a class="link-mask-link" href="{% url 'blog' %}"></a>
+                                <div class="link-mask-text" >
+                                    <div class="mt-3 text-center">
+                                        <!-- <a href="{{ My_portfolio.portfolio_medium_link }}" target="_blank">
+                                            <button type="button" class="btn btn-primary" style> <i class="fab fa-medium"></i> Medium</button>
+                                        </a> -->
+                                          
+                                        <a href="{{My_blog.blog_link }}" target="_blank">
+                                            <button type="button" class="btn btn-secondary"> <i class="fas fa-newspaper"></i>blog</button>
+                                        </a>
+                                            
+                                        <!-- <a href="{{ My_portfolio.portfolio_live_link }}" target="_blank">
+                                            <button type="button" class="btn btn-primary"> <i class="fas fa-laptop-code"></i> Live Project</button>
+                                                
+                                        </a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--//card-->
+                    </div><!--//col --><!--//col -->
+
+                    {% endfor %}
+                    
+                    
+                </div><!--//row-->
+
+                <div class="text-center py-3"><a class="btn btn-primary mr-2 mb-3 btn-pop btn-vibrate zoom-section" href="{% url 'blog' %}">
+                    &#x1F4D6; <!-- Unicode for open book -->
+                    <span class="d-none d-md-inline">View Blogs</span>
+                </a>
+                </div>
+            </div><!--//container-->
+    </section><!--//latest-blog-section-->
+
+    <section class="github section latest-blog-section p-3 p-lg-5 theme-bg-light initially-hidden animate-fade-in-slide-up ">
+    
+        <div class="container"><hr>
+            <br>
+            <h2 class="section-title font-weight-bold mb-5">My GitHub</h2>
+            <p>My GitHub Contribution Graph <a  href="https://github.com/pratapsdev11" target="_blank">DivyaPratapSingh</a> Git profile. 
+                        
+                    <div class="calendar">
+                    <!-- Loading stuff -->
+                      
+                    <img id="github-contrib-graph" src="https://github-readme-stats.vercel.app/api?username=pratapsdev11&show_icons=true&theme=radical" alt="GitHub Contribution Graph">
+                 
+                </div>
+            </div>
+
+    </section><!--//latest-blog-section-->
+    <section class="Certifications p-3 p-lg-5 theme-bg-light initially-hidden animate-fade-in-slide-up ">
+        <div class="container"><hr>
+            <br>
+                <h2 class="section-title font-weight-bold mb-5">Certifictaions I Earned</h2>
+                <div class="row">
+
+                    {% for Certification in My_certifications_object %}
+
+                    <div class="col-md-4 mb-5">
+                        <div class="card blog-post-card zoom-section">
+                            <img class="card-img-top" src="{{ Certification.pic.url }}" alt="image">
+                            <div class="card-body">
+                                <h5 class="card-title"><a class="theme-link" href="{{ Certification.verification_link }}"class="theme-link" target="_blank">{{ Certification.title }}</a></h5>
+                                <!-- Display a truncated version of the blog content -->
+                                <!-- <p class="card-text">{{ My_blog.blog_content|truncatechars:150 }}</p> -->
+                                <p class="mb-0"><a class="more-link" href="{{ Certification.verification_link }}" target="_blank">coursera</a></p>
+                            </div>
+                            <!-- <div class="card-footer">
+                                <small class="text-muted">{{ My_blog.blog_publish_time }} &#8226;</small>
+                                <small class="text-muted">{{ My_blog.blog_readtime }}</small>
+                            </div> -->
+
+                            <div class="link-mask">
+                                <a class="link-mask-link" href="{% url 'certifications' %}"></a>
+                                <div class="link-mask-text" >
+                                    <div class="mt-3 text-center">
+                                        <!-- <a href="{{ My_portfolio.portfolio_medium_link }}" target="_blank">
+                                            <button type="button" class="btn btn-primary" style> <i class="fab fa-medium"></i> Medium</button>
+                                        </a> -->
+                                          
+                                        <a href="{{ Certification.verification_link }}" target="_blank">
+                                            <button type="button" class="btn btn-secondary"> <i class=""></i>view Certificate</button>
+                                        </a>
+                                            
+                                        <!-- <a href="{{ My_portfolio.portfolio_live_link }}" target="_blank">
+                                            <button type="button" class="btn btn-primary"> <i class="fas fa-laptop-code"></i> Live Project</button>
+                                                
+                                        </a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!--//card-->
+                    </div><!--//col --><!--//col -->
+
+                    {% endfor %}
+                    
+                    
+                </div><!--//row-->
+
+                <div class="text-center py-3"><a class="btn btn-primary mr-2 mb-3 btn-pop btn-vibrate zoom-section" href="{% url 'certifications' %}">
+                    &#x1F393; <!-- Unicode for graduation cap -->
+                    <span class="d-none d-md-inline">View certifications</span>
+                </a>
+                </div>
+            </div><!--//container-->
+    </section><!--//latest-blog-section-->
+
+</div><!--//main-wrapper-->
+
+  
+
+
+    <!-- Add more sections with the initially-hidden class for other elements -->
+
+</div>
+{% endfor %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Delayed animation to create the effect
+        setTimeout(function () {
+            document.querySelectorAll('.initially-hidden').forEach(function (element) {
+                element.classList.add('animated');
+                
+            });
+        }, 500);
+    });
+
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Function to update the GitHub Contribution Graph
+        function updateGitHubContribGraph() {
+            // Get the current timestamp to avoid browser caching
+            const timestamp = new Date().getTime();
+            
+            // Update the image source with the new timestamp
+            const githubContribGraph = document.getElementById('github-contrib-graph');
+            githubContribGraph.src = `https://github-readme-stats.vercel.app/api?username=pratapsdev11&show_icons=true&theme=radical&timestamp=${timestamp}`;
+        }
+
+        // Call the function initially
+        updateGitHubContribGraph();
+
+        // Set an interval to update the graph periodically (e.g., every hour)
+        setInterval(updateGitHubContribGraph, 3600000); // 1 hour = 3600000 milliseconds
+    });
+</script>
+
+
+{% endblock content %}
+
+<footer class="footer text-center py-4">
+    <small class="copyright">Template Copyright &copy; <a href="https://themes.3rdwavemedia.com/" target="_blank">3rd Wave
+            Media</a></small>
+</footer>
+
+</div><!--//main-wrapper-->
